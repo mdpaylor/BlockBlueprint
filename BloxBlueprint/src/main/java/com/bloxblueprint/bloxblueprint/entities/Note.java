@@ -3,6 +3,7 @@ package com.bloxblueprint.bloxblueprint.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -24,17 +25,20 @@ public class Note {
     private String content;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
-    @Column(name = "experience_id")
-    private Long experienceId;
+    @ManyToOne
+    @JoinColumn(name = "experience_id", nullable = false)
+    private Experience experience;
 
-    @Column(name = "component_id")
-    private Long componentId;
+    @OneToOne
+    @JoinColumn(name = "component_id", unique = true)
+    private Component component;
 
-    @Column(name = "task_id")
-    private Long taskId;
+    @OneToOne
+    @JoinColumn(name = "task_id", unique = true)
+    private Task task;
 }

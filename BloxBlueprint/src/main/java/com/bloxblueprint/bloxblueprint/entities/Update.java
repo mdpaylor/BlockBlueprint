@@ -3,7 +3,10 @@ package com.bloxblueprint.bloxblueprint.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,18 +31,23 @@ public class Update {
     private String version;
 
     @Column(name = "release_date")
-    private Date releaseDate;
+    private LocalDateTime releaseDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
-
-    @Column(name = "experience_id")
-    private Long experienceId;
+    private UpdateStatus status;
 
     @Column(name = "createdAt")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "experience_id", nullable = false)
+    private Experience experience;
+
+    public enum UpdateStatus {
+        PLANNING, IN_PROGRESS, RELEASED
+    }
 }

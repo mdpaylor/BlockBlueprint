@@ -28,11 +28,12 @@ public class Tag {
     @Column(name = "color")
     private String color;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @ManyToMany(mappedBy = "tags")
-    private Set<User> tasks = new HashSet<>();
+    private Set<Task> tasks = new HashSet<>();
 
     @ManyToMany(mappedBy = "tags")
     private Set<Component> components = new HashSet<>();

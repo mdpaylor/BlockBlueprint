@@ -3,7 +3,10 @@ package com.bloxblueprint.bloxblueprint.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,5 +37,11 @@ public class User {
     private String phoneNumber;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Experience> experiences = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Tag> tags = new HashSet<>();
 }

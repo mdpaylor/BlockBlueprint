@@ -15,13 +15,19 @@ public class ComponentLink {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "from_component_id")
-    private Long fromComponentId;
+    @ManyToOne
+    @JoinColumn(name = "from_component_id")
+    private Component fromComponent;
 
-    @Column(name = "to_component_id")
-    private Long toComponentId;
+    @ManyToOne
+    @JoinColumn(name = "to_component_id")
+    private Component toComponent;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "relationship_type")
-    private String relationshipType;
+    private ComponentLinkRelationshipType relationshipType;
+
+    public enum ComponentLinkRelationshipType {
+        USES, CALLS, REQUIRES, PARENTS, REFERENCES
+    }
 }
