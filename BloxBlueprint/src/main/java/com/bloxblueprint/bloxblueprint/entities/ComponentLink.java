@@ -13,7 +13,7 @@ import lombok.*;
 public class ComponentLink {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "from_component_id")

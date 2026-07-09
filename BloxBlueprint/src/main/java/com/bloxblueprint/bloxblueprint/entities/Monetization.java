@@ -2,6 +2,8 @@ package com.bloxblueprint.bloxblueprint.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -17,7 +19,7 @@ public class Monetization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -35,7 +37,7 @@ public class Monetization {
     private MonetizationStatus status = MonetizationStatus.IDEA;
 
     @Column(name = "price")
-    private Long price;
+    private long price;
 
     @ManyToOne
     @JoinColumn(name = "experience_id", nullable = false)
@@ -45,9 +47,11 @@ public class Monetization {
     @JoinColumn(name = "component_id")
     private Component component;
 
-    @Column(name = "created_at")
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
