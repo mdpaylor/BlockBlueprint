@@ -2,7 +2,10 @@ package com.bloxblueprint.bloxblueprint.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -16,7 +19,7 @@ public class Monetization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -26,20 +29,37 @@ public class Monetization {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "m_type")
-    private String type;
+    private MonetizationType type;
+
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private MonetizationStatus status = MonetizationStatus.IDEA;
 
     @Column(name = "price")
-    private Long price;
+    private long price;
 
-    @Column(name = "experience_id")
-    private Long experienceId;
+    @ManyToOne
+    @JoinColumn(name = "experience_id", nullable = false)
+    private Experience experience;
 
-    @Column(name = "component_id")
-    private Long componentId;
+    @ManyToOne
+    @JoinColumn(name = "component_id")
+    private Component component;
 
-    @Column(name = "created_at")
-    private Date createdAt;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
+
+    public enum MonetizationType {
+        GAMEPASS, DEVELOPER_PRODUCT
+    }
+
+    public enum MonetizationStatus {
+        IDEA,  IN_DEVELOPMENT,  READY,  LIVE,  PAUSED
+    }
 }

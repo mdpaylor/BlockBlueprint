@@ -2,7 +2,10 @@ package com.bloxblueprint.bloxblueprint.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -15,7 +18,7 @@ import java.util.Date;
 public class Note {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "title")
     private String title;
@@ -23,18 +26,23 @@ public class Note {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "created_at")
-    private Date createdAt;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
-    @Column(name = "experience_id")
-    private Long experienceId;
+    @ManyToOne
+    @JoinColumn(name = "experience_id", nullable = false)
+    private Experience experience;
 
-    @Column(name = "component_id")
-    private Long componentId;
+    @OneToOne
+    @JoinColumn(name = "component_id", unique = true)
+    private Component component;
 
-    @Column(name = "task_id")
-    private Long taskId;
+    @OneToOne
+    @JoinColumn(name = "task_id", unique = true)
+    private Task task;
 }

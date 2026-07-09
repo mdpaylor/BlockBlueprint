@@ -2,7 +2,10 @@ package com.bloxblueprint.bloxblueprint.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +21,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "title")
     private String title;
@@ -32,31 +35,38 @@ public class Task {
     @Column(name = "completed_hours")
     private double completedHours;
 
-    @Column(name = "created_at")
-    private Date createdAt;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     @Column(name = "due_date")
-    private Date dueDate;
+    private LocalDateTime dueDate;
 
     @Column(name = "completed_date")
     private Date completedDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "priority")
-    private String priority;
+    private TaskPriority priority;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private TaskStatus status;
 
-    @Column(name = "experience_id")
-    private Long experienceId;
+    @ManyToOne
+    @JoinColumn(name = "experience_id", nullable = false)
+    private Experience experience;
 
-    @Column(name = "update_id")
-    private Long updateId;
+    @ManyToOne
+    @JoinColumn(name = "update_id")
+    private Update update;
+
+    @OneToOne(mappedBy = "task", cascade = CascadeType.ALL)
+    private Note note;
 
     @ManyToMany
     @JoinTable (
@@ -65,4 +75,12 @@ public class Task {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags = new HashSet<>();
+
+    public enum TaskStatus {
+        BACKLOG, TODO, IN_PROGRESS, COMPLETED, BLOCKED
+    }
+
+    public enum TaskPriority {
+        LOW, MEDIUM, HIGH, CRITICAL
+    }
 }

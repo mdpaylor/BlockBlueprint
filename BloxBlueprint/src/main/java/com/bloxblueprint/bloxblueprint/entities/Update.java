@@ -2,8 +2,13 @@ package com.bloxblueprint.bloxblueprint.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,7 +21,7 @@ public class Update {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "title")
     private String title;
@@ -28,18 +33,25 @@ public class Update {
     private String version;
 
     @Column(name = "release_date")
-    private Date releaseDate;
+    private LocalDateTime releaseDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private UpdateStatus status;
 
-    @Column(name = "experience_id")
-    private Long experienceId;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 
-    @Column(name = "createdAt")
-    private Date createdAt;
-
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "experience_id", nullable = false)
+    private Experience experience;
+
+    public enum UpdateStatus {
+        PLANNING, IN_PROGRESS, RELEASED
+    }
 }

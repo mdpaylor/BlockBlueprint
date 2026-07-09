@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS experiences
 	updated_at TIMESTAMP,
 	user_id BIGINT NOT NULL,
 	
-	CONSTRAINT fk_user
+	CONSTRAINT fk_experiences_user
 		FOREIGN KEY(user_id)
 		REFERENCES users(id)
 );
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS component_functions
 	name VARCHAR(255) NOT NULL,
 	description TEXT,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	udpated_at TIMESTAMP,
+	updated_at TIMESTAMP,
 	component_id BIGINT NOT NULL,
 	parent_function_id BIGINT,
 	
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS tasks
 	completed_date DATE,
 	priority VARCHAR(8) NOT NULL DEFAULT 'LOW',
 	status VARCHAR(11) NOT NULL DEFAULT 'TODO',
-	experience_id BIGINT,
+	experience_id BIGINT NOT NULL,
 	update_id BIGINT,
 
 	CONSTRAINT fk_experience
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS tasks
 		REFERENCES updates(id),
 
 	CONSTRAINT validate_priority
-			CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH', 'CRITICAL')),
+		CHECK (priority IN ('LOW', 'MEDIUM', 'HIGH', 'CRITICAL')),
 	CONSTRAINT validate_status
 		CHECK (status IN ('BACKLOG', 'TODO', 'IN_PROGRESS', 'COMPLETED', 'BLOCKED'))
 );
@@ -126,6 +126,7 @@ CREATE TABLE IF NOT EXISTS monetizations
 	component_id BIGINT,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMP,
+	status VARCHAR(20) NOT NULL DEFAULT 'IDEA',
 
 	CONSTRAINT fk_project
 		FOREIGN KEY(experience_id)
@@ -136,7 +137,10 @@ CREATE TABLE IF NOT EXISTS monetizations
 		REFERENCES components(id),
 
 	CONSTRAINT validate_m_type
-		CHECK(m_type IN ('GAMEPASS', 'DEVELOPER_PRODUCT'))
+		CHECK(m_type IN ('GAMEPASS', 'DEVELOPER_PRODUCT')),
+
+	CONSTRAINT chk_monetization_status
+		CHECK (status IN ( 'IDEA', 'IN_DEVELOPMENT', 'READY', 'LIVE', 'PAUSED'))
 );
 
 CREATE TABLE IF NOT EXISTS tags
@@ -147,7 +151,7 @@ CREATE TABLE IF NOT EXISTS tags
 	description TEXT,
 	user_id BIGINT NOT NULL,
 
-	CONSTRAINT fk_user
+	CONSTRAINT fk_tags_user
 		FOREIGN KEY(user_id)
 		REFERENCES users(id)
 );
@@ -186,7 +190,7 @@ CREATE TABLE IF NOT EXISTS component_tags
 
 CREATE TABLE IF NOT EXISTS component_links
 (
-	if BIGSERIAL PRIMARY KEY,
+	id BIGSERIAL PRIMARY KEY,
 	from_component_id BIGINT NOT NULL,
 	to_component_id BIGINT NOT NULL,
 	relationship_type VARCHAR(10) NOT NULL DEFAULT 'USES',
@@ -224,5 +228,11 @@ CREATE TABLE IF NOT EXISTS notes
 		
 	CONSTRAINT fk_task
 		FOREIGN KEY(task_id)
-		REFERENCES tasks(id)
+		REFERENCES tasks(id),
+
+	CONSTRAINT uq_note_component
+		UNIQUE (component_id),
+
+	CONSTRAINT uq_note_task
+		UNIQUE (task_id)
 );

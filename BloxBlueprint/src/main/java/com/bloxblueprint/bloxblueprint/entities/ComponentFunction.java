@@ -2,8 +2,13 @@ package com.bloxblueprint.bloxblueprint.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,7 +21,7 @@ public class ComponentFunction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -24,15 +29,22 @@ public class ComponentFunction {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "component_id")
-    private Long componentId;
+    @ManyToOne
+    @JoinColumn(name = "component_id",  nullable = false)
+    private Component component;
 
-    @Column(name = "parent_function_id")
-    private Long parentFunctionId;
+    @ManyToOne
+    @JoinColumn(name = "parent_function_id")
+    private ComponentFunction parentFunction;
 
-    @Column(name = "created_at")
-    private Date createdAt;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false, nullable = false)
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "parentFunction", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ComponentFunction> childFunctions = new HashSet<>();
 }
