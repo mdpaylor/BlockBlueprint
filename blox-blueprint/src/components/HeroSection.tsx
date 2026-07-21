@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function HeroSection() {
   return (
@@ -14,10 +15,10 @@ function HeroSection() {
           </p>
 
           <div className="hero-actions">
-            <a className="button button-primary" href="/auth/register">
+            <Link className="button button-primary" to="/register">
               Start Building
               <ArrowRight />
-            </a>
+            </Link>
           </div>
         </div>
 

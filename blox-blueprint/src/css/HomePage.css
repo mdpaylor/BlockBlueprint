@@ -120,6 +120,8 @@ button, a {
         radial-gradient(circle at 30% 30%, #082d6b, transparent 28%),
         var(--navy);
     background-size: 32px 32px, 32px 32px, auto auto;
+    background-position: 0 0, 0 0,  center, center;
+    animation: scroll-blueprint-grid 2s linear infinite;
 }
 
 .hero-inner {
@@ -355,6 +357,8 @@ button, a {
         radial-gradient(circle at 20% 50%, #082d6b, transparent 42%),
         var(--navy);
     background-size: 32px 32px, 32px 32px, auto, auto;
+    background-position: 0 0, 0 0,  center, center;
+    animation: scroll-blueprint-grid 2s linear infinite;
 }
 
 .contact-inner {
@@ -466,6 +470,24 @@ button, a {
 
 .contact-resume-button:hover {
     background: rgb(255 255 255 / 8%);
+}
+
+@keyframes scroll-blueprint-grid {
+  from {
+    background-position:
+      0 0,
+      0 0,
+      center,
+      center;
+  }
+
+  to {
+    background-position:
+      -32px -32px,
+      -32px -32px,
+      center,
+      center;
+  }
 }
 
 /* Stack the How It Works steps and statistics into separate rows */

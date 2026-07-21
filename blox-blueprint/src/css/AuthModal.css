@@ -1,0 +1,438 @@
+/* ==============================
+   Overlay
+   ============================== */
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+
+  background: rgb(2 15 47 / 78%);
+  backdrop-filter: blur(8px);
+
+  animation: auth-overlay-enter 250ms ease;
+}
+
+@keyframes auth-overlay-enter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==============================
+   Modal
+   ============================== */
+
+.auth-modal {
+  position: relative;
+
+  width: min(900px, 70%);
+  max-height: calc(100dvh - 48px);
+  min-height: 75%;
+
+  display: grid;
+  grid-template-columns: minmax(420px, 1.1fr) minmax(340px, 0.9fr);
+
+  overflow: hidden;
+  color: #ffffff;
+  background: #020e25;
+  border: 1px solid #255fa1;
+  border-radius: 16px;
+  box-shadow: 0 30px 90px rgb(0 0 0 / 40%);
+
+  animation: auth-modal-enter 300ms ease;
+}
+
+@keyframes auth-modal-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==============================
+   Close button
+   ============================== */
+
+.auth-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  display: grid;
+  place-items: center;
+
+  color: #94a3b8;
+  background: rgb(255 255 255 / 4%);
+  border: 1px solid rgb(255 255 255 / 10%);
+  border-radius: 8px;
+  cursor: pointer;
+
+  transition:
+    color 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+.auth-close:hover {
+  color: #ffffff;
+  background: rgb(255 255 255 / 10%);
+  border-color: rgb(96 165 250 / 35%);
+}
+
+/* ==============================
+   Left form panel
+   ============================== */
+
+.auth-form-panel {
+  min-width: 0;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.auth-form-container {
+  position: relative;
+  margin-top: 24px;
+}
+
+.brand {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.65rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+}
+
+.brand > span {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.brand-accent {
+    color: #4594ff;
+}
+
+/* Runs again when the React key changes */
+.auth-form-transition {
+  animation: auth-form-enter 280ms ease;
+}
+
+@keyframes auth-form-enter {
+  from {
+    opacity: 0;
+    transform: translateY(38px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================
+   Login/Register tabs
+   ============================== */
+
+.auth-tabs {
+  position: relative;
+
+  height: 44px;
+  padding: 3px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  background: #071833;
+  border: 1px solid #2a4267;
+  border-radius: 8px;
+}
+
+.auth-tab {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  place-items: center;
+
+  color: #a9bbd3;
+  font-weight: 700;
+
+  transition: color 250ms ease;
+}
+
+.auth-tab:hover {
+  color: #ffffff;
+}
+
+.auth-tab.active {
+  color: #ffffff;
+}
+
+.auth-tab-indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  z-index: 1;
+
+  width: calc(50% - 3px);
+
+  background: var(--blue);
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgb(22 119 255 / 28%);
+
+  transform: translateX(0);
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.auth-tab-indicator.register-active {
+  transform: translateX(100%);
+}
+
+/* ==============================
+   General form styling
+   ============================== */
+
+.auth-form h2 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-size: 1.75rem;
+}
+
+.auth-form > p {
+  margin: 0 0 24px;
+  color: #a9bbd3;
+  line-height: 1.5;
+}
+
+.auth-form form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-form label {
+  color: #dbeafe;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.auth-form input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+
+  color: #ffffff;
+  background: #071833;
+  border: 1px solid #2a4267;
+  border-radius: 8px;
+  outline: none;
+
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.auth-form input::placeholder {
+  color: #71829b;
+}
+
+.auth-form input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgb(22 119 255 / 18%);
+}
+
+.auth-form button[type="submit"] {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* ==============================
+   Registration form
+   ============================== */
+
+.register-fields {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.register-fields input::placeholder {
+  color: #697891;
+}
+
+.register-name-fields {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.register-input-field {
+  background-color: rgb(255 255 255 / 5%);
+  border: 1px solid #24314B;
+  border-radius: 10px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+}
+
+/* Use this if an input has an icon inside it */
+.register-input-wrapper {
+  position: relative;
+}
+
+.register-field-icon {
+  position: static;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  pointer-events: none;
+}
+
+.register-field-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.register-input-label {
+  width: 100%;
+  margin: 0;
+  display: grid;
+  gap: 4px;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.register-input-label span {
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+}
+
+.register-input-label input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+}
+
+.register-input-wrapper input {
+  padding-left: 44px;
+}
+
+/* ==============================
+   Right visual panel
+   ============================== */
+
+.auth-visual-panel {
+  min-height: 580px;
+
+  background:
+    linear-gradient(rgb(16 90 190 / 14%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(16 90 190 / 14%) 1px, transparent 1px),
+    radial-gradient(circle at center, #0a3780, transparent 65%),
+    #041941;
+
+  background-size: 28px 28px, 28px 28px, auto, auto;
+  border-left: 1px solid rgb(96 165 250 / 25%);
+}
+
+/* ==============================
+   Tablet
+   ============================== */
+
+@media (max-width: 800px) {
+  .auth-modal {
+    width: min(520px, 100%);
+    grid-template-columns: 1fr;
+  }
+
+  .auth-form-panel {
+    padding: 36px 28px;
+  }
+
+  .auth-visual-panel {
+    display: none;
+  }
+}
+
+/* ==============================
+   Mobile
+   ============================== */
+
+@media (max-width: 600px) {
+  .auth-overlay {
+    padding: 12px;
+    place-items: start center;
+  }
+
+  .auth-modal {
+    width: 100%;
+    max-height: calc(100dvh - 24px);
+    margin-block: 12px;
+  }
+
+  .auth-form-panel {
+    padding: 64px 20px 28px;
+  }
+
+  .register-name-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-tabs {
+    height: 42px;
+  }
+}
+
+/* ==============================
+   Reduced motion
+   ============================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-overlay,
+  .auth-modal,
+  .auth-form-transition {
+    animation: none;
+  }
+
+  .auth-tab-indicator {
+    transition: none;
+  }
+}

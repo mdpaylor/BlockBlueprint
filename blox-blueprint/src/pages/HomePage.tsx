@@ -1,8 +1,9 @@
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
 import FeatureGrid from "../components/FeatureGrid";
 import HowItWorks from "../components/HowItWorks";
-import ContactSection from "../components/ContactSection"
+import ContactSection from "../components/ContactSection";
 import "../css/HomePage.css";
 
 function HomePage() {
@@ -16,7 +17,7 @@ function HomePage() {
         <ContactSection />
       </main>
 
-      {/* <Footer /> */}
+      <Outlet />
     </>
   );
 }
