@@ -1,10 +1,18 @@
+import type { SubmitEvent } from "react";
+
+function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+  event.preventDefault();
+
+  console.log("Register event submit");
+}
+
 function LoginForm() {
   return (
     <div className="auth-form">
       <h2 id="auth-title">Welcome Back</h2>
       <p>Log in to continue to BloxBlueprint.</p>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="login-username">Username</label>
         <input
           id="login-username"

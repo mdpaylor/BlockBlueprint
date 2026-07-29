@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../../css/AuthModal.css";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import robloxGuyCoding from "../../assets/roblox_guy_coding.png";
 
 function AuthModal() {
   const navigate = useNavigate();
@@ -81,14 +82,17 @@ function AuthModal() {
           </div>
 
           <div className="auth-form-container">
-            <div className="auth-form-transition" key={isRegister ? "register" : "login"}>
+            <div
+              className="auth-form-transition"
+              key={isRegister ? "register" : "login"}
+            >
               {isRegister ? <RegisterForm /> : <LoginForm />}
             </div>
           </div>
         </div>
 
         <aside className="auth-visual-panel">
-
+          <img src={robloxGuyCoding} alt="Reblox character coding a game" />
         </aside>
       </section>
     </div>
