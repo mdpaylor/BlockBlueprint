@@ -31,13 +31,13 @@ function AuthModal() {
   }, []);
 
   return (
-    <div className="auth-overlay" role="presentation" onMouseDown={closeModal}>
+    <div className="auth-overlay" role="presentation" onMouseUp={closeModal}>
       <section
         className="auth-modal"
         role="dialog"
         aria-modal="true"
         aria-labelledby="auth-title"
-        onMouseDown={(event) => event.stopPropagation()}
+        onMouseUp={(event) => event.stopPropagation()}
       >
         <button
           className="auth-close"

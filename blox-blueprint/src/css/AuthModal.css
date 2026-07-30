@@ -146,7 +146,7 @@
 @keyframes auth-form-enter {
   from {
     opacity: 0;
-    transform: translateY(38px);
+    transform: translateY(5px);
   }
 
   to {
