@@ -5,8 +5,9 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,11 +30,11 @@ public class Task {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "estimated_hours")
-    private double estimatedHours;
+    @Column(name = "estimated_hours", precision = 5, scale = 1)
+    private BigDecimal estimatedHours;
 
-    @Column(name = "completed_hours")
-    private double completedHours;
+    @Column(name = "completed_hours", precision = 5, scale = 1)
+    private BigDecimal completedHours;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
@@ -44,10 +45,10 @@ public class Task {
     private LocalDateTime updatedAt;
 
     @Column(name = "due_date")
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     @Column(name = "completed_date")
-    private Date completedDate;
+    private LocalDate completedDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "priority")
