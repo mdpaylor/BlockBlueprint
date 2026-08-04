@@ -1,37 +1,3 @@
-:root {
-    font-family: Inter, system-ui, sans-serif;
-    color: #0f172a;
-    background: #ffffff;
-
-    --navy: #020f2f;
-    --navy-light: #062054;
-    --blue: #1677ff;
-    --blue-hover: #0866e8;
-    --muted: #64748b;
-    --border: #dbe5f1;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-button, a {
-    font: inherit;
-}
-
 .navbar {
     min-height: 76px;
     padding: 0 5%;
@@ -81,34 +47,6 @@ button, a {
 .nav-button {
     justify-self: end;
 }
-
-.button {
-    min-height: 48px;
-    padding: 0 26px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-}
-
-.button-primary {
-    color: #ffffff;
-    background: var(--blue);
-}
-
-.button-primary:hover {
-    background: var(--blue-hover);
-}
-
-.button-secondary {
-    color: #ffffff;
-    background: transparent;
-    border-color: #9eb2da;
-} /*Might not need this*/
 
 .hero {
     position: relative;
