@@ -10,7 +10,7 @@ export async function registerUser(data: RegisterUserRequestDto): Promise<Respon
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data),
     });
