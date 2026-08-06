@@ -1,26 +1,24 @@
 import type 
 { 
-    LoginUserRequestDto, 
-    LoginUserResponseDto, 
-    RegisterUserRequestDto, 
-    RegisterUserResponseDto 
+    LoginUserRequestDto,
+    RegisterUserRequestDto,
 } from "../types/authTypes.ts";
 
-const API_BASE_URL = "http://localhost:8080/";
+const API_BASE_URL = "http://localhost:8080";
 
-export async function registerUser(data: RegisterUserRequestDto): Promise<RegisterUserResponseDto> {
+export async function registerUser(data: RegisterUserRequestDto): Promise<Response> {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(data),
     });
 
-    return response.json();
+    return response;
 }
 
-export async function loginUser(data: LoginUserRequestDto): Promise<LoginUserResponseDto> {
+export async function loginUser(data: LoginUserRequestDto): Promise<Response> {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
@@ -28,5 +26,5 @@ export async function loginUser(data: LoginUserRequestDto): Promise<LoginUserRes
         },
         body: JSON.stringify(data)
     });
-    return response.json();
+    return response;
 }
