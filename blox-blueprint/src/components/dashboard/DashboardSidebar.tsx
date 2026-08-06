@@ -96,11 +96,18 @@ function DashboardSidebar() {
           </div>
         </div>
 
-        <div className="dashboard-project-settings">
+        <NavLink
+          to="/dashboard/settings"
+          className={({ isActive }) =>
+            isActive
+              ? "dashboard-project-settings active"
+              : "dashboard-project-settings"
+          }
+        >
           <Settings />
           <span>Project Settings</span>
           <ChevronRight />
-        </div>
+        </NavLink>
 
         <div className="dashboard-sidebar-image">
           <img src={dashboardSidebar} alt="" />

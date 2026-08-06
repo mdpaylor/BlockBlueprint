@@ -1,24 +1,44 @@
+import { Bell, Settings } from "lucide-react";
+import DashboardBrand from "./DashboardBrand";
 import DashboardProjectDropdown from "./DashboardProjectDropdown";
+import DashboardSearch from "./DashboardSearch";
+import { NavLink } from "react-router";
 
 function DashboardNavbar() {
+  let profileImage = ""; // #TODO: Replace with the actual path to the profile image
+
   return (
     <header className="dashboard-navbar">
-      <div className="dashboard-brand">
-        <img
-          src="../src/assets/blox-blueprint-logo.png"
-          alt=""
-          className="dashboard-brand-logo"
-        />
-        <span>
-          Blox<span className="dashboard-brand-accent">Blueprint</span>
-        </span>
-      </div>
-
+      <DashboardBrand />
       <DashboardProjectDropdown />
+      <DashboardSearch />
 
-      <div className="dashboard-search"></div>
+      <div className="dashboard-right-icons">
+        <button
+          className="dashboard-icon-button"
+          type="button"
+          aria-label="Notifications"
+        >
+          <Bell />
+        </button>
 
-      <div className="dashboard-right-icons"></div>
+        <NavLink
+          className="dashboard-icon-button"
+          to="/dashboard/settings"
+          aria-label="Settings"
+        >
+          <Settings />
+        </NavLink>
+
+        <NavLink
+          className="dashboard-profile-button"
+          to="/user/profile"
+          aria-label="Profile"
+        >
+          <img src={profileImage} alt="" />
+          <span className="profile-status" />
+        </NavLink>
+      </div>
     </header>
   );
 }
