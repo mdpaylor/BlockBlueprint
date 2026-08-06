@@ -1,28 +1,12 @@
 import { Outlet } from "react-router-dom";
 import "../css/Dashboard.css";
-import DashboardSidebar from "../components/DashboardSidebar";
+import DashboardSidebar from "../components/dashboard/DashboardSidebar";
+import DashboardNavbar from "../components/dashboard/DashboardNavbar";
 
 function DashboardLayout() {
   return (
     <div className="dashboard-layout">
-      <header className="dashboard-navbar">
-        <div className="dashboard-brand">
-          <img
-            src="../src/assets/blox-blueprint-logo.png"
-            alt=""
-            className="dashboard-brand-logo"
-          />
-          <span>
-            Blox<span className="dashboard-brand-accent">Blueprint</span>
-          </span>
-        </div>
-
-        <div className="dashboard-dropdown"></div>
-
-        <div className="dashboard-search"></div>
-
-        <div className="dashboard-right-icons"></div>
-      </header>
+      <DashboardNavbar />
 
       <div className="dashboard-main">
         <DashboardSidebar />
