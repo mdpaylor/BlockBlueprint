@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Navbar() {
   return (
     <header className="navbar">
@@ -20,13 +22,13 @@ function Navbar() {
       </nav>
 
       <div className="login-register-buttons">
-        <a className="button button-primary nav-button" href="/auth/register">
+        <Link className="button button-primary nav-button" to="/register">
           Get Started
-        </a>
+        </Link>
 
-        <a className="button button-secondary nav-button" href="/auth/login">
+        <Link className="button button-secondary nav-button" to="/login">
           Login
-        </a>
+        </Link>
       </div>
     </header>
   );
