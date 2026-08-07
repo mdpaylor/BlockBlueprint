@@ -32,6 +32,5 @@ export type LoginUserRequestDto = {
 export type LoginUserResponseDto = {
   success: boolean;
   message: string;
-  token?: string;
   user?: UserDto;
 };

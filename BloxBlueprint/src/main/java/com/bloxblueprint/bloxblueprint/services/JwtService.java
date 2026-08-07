@@ -4,7 +4,6 @@ import com.bloxblueprint.bloxblueprint.entities.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +28,9 @@ public class JwtService {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(User user) {
+    public String generateToken(String username) {
         return Jwts.builder()
-                .subject(user.getUsername())
+                .subject(username)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey())
@@ -46,7 +45,7 @@ public class JwtService {
                 .getPayload();
     }
 
-    private String extractUsername(String token) {
+    public String extractUsername(String token) {
         return getClaimsFromToken(token).getSubject();
     }
 

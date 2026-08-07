@@ -1,11 +1,13 @@
 package com.bloxblueprint.bloxblueprint.controllers.users;
 
 import com.bloxblueprint.bloxblueprint.dtos.user.*;
-import com.bloxblueprint.bloxblueprint.mappers.UserMapper;
-import com.bloxblueprint.bloxblueprint.repositories.UserRepository;
+import com.bloxblueprint.bloxblueprint.services.AuthCookieService;
 import com.bloxblueprint.bloxblueprint.services.AuthService;
+import com.bloxblueprint.bloxblueprint.services.JwtService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -14,7 +16,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
-    private AuthService authService;
+    private final AuthService authService;
+    private final JwtService jwtService;
+    private final AuthCookieService authCookieService;
 
     @PostMapping("/register")
     public ResponseEntity<RegisterUserResponseDto> register(
@@ -26,9 +30,12 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(responseDto);
         }
 
-        var uri = uriBuilder.path("/users/{id}").buildAndExpand(responseDto.getUser().getId()).toUri();
+        String jwt = jwtService.generateToken(responseDto.getUser().getUsername());
+        ResponseCookie authCookie = authCookieService.createAuthCookie(jwt);
 
-        return ResponseEntity.created(uri).body(responseDto);
+        var userLocation = uriBuilder.path("/users/{id}").buildAndExpand(responseDto.getUser().getId()).toUri();
+
+        return ResponseEntity.created(userLocation).header(HttpHeaders.SET_COOKIE, authCookie.toString()).body(responseDto);
     }
 
     @PostMapping("/login")
@@ -42,6 +49,10 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseDto);
         }
 
-        return ResponseEntity.ok(responseDto);
+        String jwt = jwtService.generateToken(responseDto.getUser().getUsername());
+
+        ResponseCookie authCookie = authCookieService.createAuthCookie(jwt);
+
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, authCookie.toString()).body(responseDto);
     }
 }

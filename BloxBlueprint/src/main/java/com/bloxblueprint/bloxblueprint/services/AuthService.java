@@ -49,11 +49,9 @@ public class AuthService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             if (passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
-                String token = jwtService.generateToken(user);
                 return LoginUserResponseDto.builder()
                         .success(true)
                         .message("Login successful")
-                        .token(token)
                         .user(userMapper.toUserDto(user))
                         .build();
             }
