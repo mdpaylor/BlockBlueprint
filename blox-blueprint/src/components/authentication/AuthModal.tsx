@@ -7,7 +7,6 @@ import RegisterForm from "./RegisterForm";
 import robloxGuyCoding from "../../assets/roblox_guy_coding.png";
 
 function AuthModal() {
-  console.log("opened auth");
   const navigate = useNavigate();
   const location = useLocation();
 
