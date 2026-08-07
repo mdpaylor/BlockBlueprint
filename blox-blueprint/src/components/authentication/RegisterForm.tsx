@@ -37,7 +37,7 @@ const nameInputFields: InputField[] = [
     title: "Last Name",
     hint: "Last name",
     hasVisibilityToggle: false,
-  },
+  }
 ];
 
 const otherInputFields: InputField[] = [
@@ -75,11 +75,58 @@ const otherInputFields: InputField[] = [
     title: "Confirm Password",
     hint: "Confirm your password",
     hasVisibilityToggle: true,
-  },
+  }
 ];
 
 async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
   event.preventDefault();
+
+  const formData = new FormData(event.currentTarget);
+
+  const firstName = String(formData.get("firstName") ?? "");
+  const lastName = String(formData.get("lastName") ?? "");
+  const username = String(formData.get("username") ?? "");
+  const email = String(formData.get("email") ?? "");
+  const phoneNumber = String(formData.get("phoneNumber") ?? "");
+  const password = String(formData.get("password") ?? "");
+  const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+  if (password !== confirmPassword) {
+    alert("Passwords do not match!"); // TODO: Add css for incorrect password matching
+    return;
+  }
+
+  const registerUserRequest: RegisterUserRequestDto = {
+    firstName: firstName,
+    lastName: lastName,
+    username: username,
+    email: email,
+    phoneNumber: phoneNumber,
+    password: password,
+  };
+
+  try {
+    const response = await registerUser(registerUserRequest);
+
+    if (!response.ok) {
+      const errorData = await response.json();
+
+      console.error("Registration failed:", errorData);
+      return;
+    }
+
+    const data: RegisterUserResponseDto = await response.json();
+
+    console.log("Account created:", data);
+  } 
+  catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Unable to reach the server:", error.message);
+    }
+    else {
+      console.error("An unknown error occured");
+    }
+  }
 
   console.log("Registration");
 }
