@@ -1,84 +1,120 @@
-import type { SubmitEvent } from "react";
+import { useState, type SubmitEvent } from "react";
 import { loginUser } from "../../services/authApi";
 import type {
   LoginUserRequestDto,
   LoginUserResponseDto,
 } from "../../types/authTypes";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
-  event.preventDefault();
+function LoginForm() {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+  const [loginError, setLoginError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const formData = new FormData(event.currentTarget);
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
 
-  const username = String(formData.get("username") ?? "");
-  const password = String(formData.get("password") ?? "");
+    setLoginError("");
+    setIsSubmitting(true);
 
-  const loginUserRequest: LoginUserRequestDto = {
-    username: username,
-    password: password,
-  };
+    const formData = new FormData(event.currentTarget);
 
-  try {
-    const response = await loginUser(loginUserRequest);
-    const responseText = await response.text();
+    const loginUserRequest: LoginUserRequestDto = {
+      username: String(formData.get("username") ?? ""),
+      password: String(formData.get("password") ?? ""),
+    };
 
-    let data: LoginUserResponseDto | null = null;
-    if (responseText) {
-      try {
-        data = JSON.parse(responseText) as LoginUserResponseDto;
-      } catch {
-        console.error("The server retruned invalid JSON:", responseText);
+    try {
+      const response = await loginUser(loginUserRequest);
+      const responseText = await response.text();
+
+      let data: LoginUserResponseDto | null = null;
+      if (responseText) {
+        try {
+          data = JSON.parse(responseText) as LoginUserResponseDto;
+        } catch {
+          console.error("The server retruned invalid JSON:", responseText);
+        }
       }
-    }
 
-    if (!response.ok) {
-      console.error("Login failed", response.status, response.statusText);
+      if (!response.ok) {
+        console.error("Login failed", response.status, response.statusText);
 
-      // TODO: add logic for incorrect username or password
-      return;
-    }
+        if (response.status === 401) {
+          setLoginError("Incorrect username or password.");
+        } else {
+          setLoginError("Unable to log in. Please try again.");
+        }
 
-    // setUser(data.user)
-    // navigate("/dashboard")
-    console.log("Login successful", data);
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      console.error("Unable to reach the server:", error.message);
-    } else {
-      console.error("An unknown error occured");
+        return;
+      }
+
+      if (data?.user) {
+        setUser(data.user);
+        navigate("/dashboard");
+        console.log("Login successful");
+      } else {
+        console.error("Login unsuccessful", data);
+      }
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Unable to reach the server:", error.message);
+      } else {
+        console.error("An unknown error occured");
+      }
+      setLoginError("Unable to reach the server. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
-  console.log("Register event submit");
-}
-
-function LoginForm() {
   return (
     <div className="auth-form">
       <h2 id="auth-title">Welcome Back</h2>
       <p>Log in to continue to BloxBlueprint.</p>
 
       <form onSubmit={handleSubmit}>
-        <label htmlFor="login-username">Username</label>
-        <input
-          id="login-username"
-          name="username"
-          type="text"
-          autoComplete="username"
-          required
-        />
+        <div
+          className={`login-input-field ${loginError ? "login-input-field-error" : ""}`}
+        >
+          <label htmlFor="login-username">Username</label>
+          <input
+            id="login-username"
+            name="username"
+            type="text"
+            autoComplete="username"
+            required
+            onChange={() => setLoginError("")}
+          />
+        </div>
+        <div
+          className={`login-input-field ${loginError ? "login-input-field-error" : ""}`}
+        >
+          <label htmlFor="login-password">Password</label>
+          <input
+            id="login-password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            required
+            onChange={() => setLoginError("")}
+          />
+        </div>
 
-        <label htmlFor="login-password">Password</label>
-        <input
-          id="login-password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          required
-        />
+        {loginError && (
+          <p className="login-error-message" id="login-error" role="alert">
+            {loginError}
+          </p>
+        )}
 
-        <button className="button button-primary" type="submit">
-          Log In
+        <button
+          className="button button-primary"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Logging in..." : "Log In"}
         </button>
       </form>
     </div>

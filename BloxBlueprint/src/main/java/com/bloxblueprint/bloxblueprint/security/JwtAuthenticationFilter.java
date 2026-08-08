@@ -29,41 +29,58 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException
-    {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
         String jwt = getJwtFromCookies(request);
-        if (jwt == null) {
-            filterChain.doFilter(request, response);
-            return;
-        }
 
         try {
-            String username = jwtService.extractUsername(jwt);
+            if (
+                    jwt != null
+                            && SecurityContextHolder
+                            .getContext()
+                            .getAuthentication() == null
+            ) {
+                String username =
+                        jwtService.extractUsername(jwt);
 
-            boolean authenticationNonExistent = SecurityContextHolder.getContext().getAuthentication() == null;
-
-            if (username != null && authenticationNonExistent) {
-                Optional<User> optionalUser = userRepository.findByUsername(username);
+                Optional<User> optionalUser =
+                        userRepository.findByUsername(username);
 
                 if (optionalUser.isPresent()) {
                     User user = optionalUser.get();
+
                     if (jwtService.isTokenValid(jwt, user)) {
                         UsernamePasswordAuthenticationToken authentication =
                                 new UsernamePasswordAuthenticationToken(
-                                        user.getUsername(), null, Collections.emptyList()
+                                        user.getUsername(),
+                                        null,
+                                        Collections.emptyList()
                                 );
 
-                        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        authentication.setDetails(
+                                new WebAuthenticationDetailsSource()
+                                        .buildDetails(request)
+                        );
 
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                        SecurityContextHolder
+                                .getContext()
+                                .setAuthentication(authentication);
                     }
                 }
             }
-        }
-        catch (JwtException | IllegalArgumentException exception) {
+        } catch (JwtException | IllegalArgumentException exception) {
             SecurityContextHolder.clearContext();
+
+            System.out.println(
+                    "Unable to authenticate JWT: "
+                            + exception.getMessage()
+            );
         }
+
+        filterChain.doFilter(request, response);
     }
 
     private String getJwtFromCookies(HttpServletRequest request) {

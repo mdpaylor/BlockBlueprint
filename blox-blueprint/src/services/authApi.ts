@@ -27,3 +27,13 @@ export function loginUser(data: LoginUserRequestDto): Promise<Response> {
     });
     return response;
 }
+
+export function getCurrentUser(): Promise<Response> {
+    const response = apiFetch("/auth/me", {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    return response;
+}

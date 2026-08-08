@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function Navbar() {
+  const { user, isAuthLoading } = useAuth();
+
   return (
     <header className="navbar">
       <a className="brand" href="/">
@@ -22,13 +25,22 @@ function Navbar() {
       </nav>
 
       <div className="login-register-buttons">
-        <Link className="button button-primary nav-button" to="/register">
-          Get Started
-        </Link>
+        {!isAuthLoading &&
+          (user ? (
+            <Link className="button button-primary nav-button" to="/dashboard">
+              Open Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link className="button button-primary nav-button" to="/register">
+                Get Started
+              </Link>
 
-        <Link className="button button-secondary nav-button" to="/login">
-          Login
-        </Link>
+              <Link className="button button-secondary nav-button" to="/login">
+                Login
+              </Link>
+            </>
+          ))}
       </div>
     </header>
   );

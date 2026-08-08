@@ -14,6 +14,8 @@ import type {
   RegisterUserResponseDto,
 } from "../../types/authTypes";
 import { registerUser } from "../../services/authApi";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 type InputField = {
   name: string;
@@ -79,6 +81,8 @@ const otherInputFields: InputField[] = [
 ];
 
 function RegisterForm() {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [emptyFields, setEmptyFields] = useState<Record<string, boolean>>({});
   const [visiblePasswords, setVisiblePasswords] = useState<
@@ -128,6 +132,7 @@ function RegisterForm() {
   async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
     setFieldErrors({});
+
 
     const formData = new FormData(event.currentTarget);
 
@@ -189,18 +194,22 @@ function RegisterForm() {
         return;
       }
 
-      // setUser(data.user);
-      // navigate("/dashboard");
-      console.log("Account created:", data);
-    } catch (error: unknown) {
+      if (data?.user) {
+        setUser(data.user);
+        navigate("/dashboard");
+        console.log("Account created:");
+      }
+      else {
+        console.error("Account not created", data);
+      }
+    } 
+    catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Unable to reach the server:", error.message);
       } else {
         console.error("An unknown error occured");
       }
     }
-
-    console.log("Registration");
   }
 
   return (
