@@ -1,22 +1,23 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import logo from "../../assets/blox-blueprint-logo.png";
 
 function Navbar() {
   const { user, isAuthLoading } = useAuth();
 
   return (
     <header className="navbar">
-      <a className="brand" href="/">
+      <Link className="homepage-brand" to="/">
         <img
-          src="../src/assets/blox-blueprint-logo.png"
-          alt=""
-          className="brand-logo"
+          src={logo}
+          alt="BloxBlueprint logo"
+          className="homepage-brand-logo"
         />
 
         <span>
           Blox<span className="brand-accent">Blueprint</span>
         </span>
-      </a>
+      </Link>
 
       <nav className="nav-links" aria-label="Main Navigation">
         <a href="#features">Features</a>

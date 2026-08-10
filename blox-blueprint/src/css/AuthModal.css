@@ -114,7 +114,7 @@
   margin-top: 12px;
 }
 
-.brand {
+.auth-brand {
   width: 100%;
   display: flex;
   align-items: center;
@@ -126,20 +126,20 @@
   margin-bottom: 10px;
 }
 
-.brand-logo {
+.auth-brand-logo {
   width: 44px;
   height: 44px;
   object-fit: contain;
   display: block;
 }
 
-.brand > span {
+.auth-brand > span {
   display: flex;
   align-items: center;
   line-height: 1;
 }
 
-.brand-accent {
+.auth-brand-accent {
     color: #4594ff;
 }
 

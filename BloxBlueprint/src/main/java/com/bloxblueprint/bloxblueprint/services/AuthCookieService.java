@@ -14,7 +14,7 @@ public class AuthCookieService {
     private final long jwtExpiration;
 
     public AuthCookieService(
-            @Value("${app.cookie.secure:false}") boolean secureCookie,
+            @Value("${app.cookie.secure:true}") boolean secureCookie,
             @Value("${jwt.expiration}") long jwtExpiration
     ) {
         this.secureCookie = secureCookie;

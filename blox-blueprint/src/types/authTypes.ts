@@ -25,7 +25,7 @@ export type RegisterUserResponseDto = {
 };
 
 export type LoginUserRequestDto = {
-  username: string;
+  identifier: string;
   password: string;
 };
 

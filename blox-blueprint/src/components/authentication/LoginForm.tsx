@@ -22,7 +22,7 @@ function LoginForm() {
     const formData = new FormData(event.currentTarget);
 
     const loginUserRequest: LoginUserRequestDto = {
-      username: String(formData.get("username") ?? ""),
+      identifier: String(formData.get("username") ?? ""),
       password: String(formData.get("password") ?? ""),
     };
 
@@ -79,7 +79,7 @@ function LoginForm() {
         <div
           className={`login-input-field ${loginError ? "login-input-field-error" : ""}`}
         >
-          <label htmlFor="login-username">Username</label>
+          <label htmlFor="login-username">Username, Email, or Phone Number</label>
           <input
             id="login-username"
             name="username"

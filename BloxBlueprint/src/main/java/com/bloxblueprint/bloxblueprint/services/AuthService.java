@@ -5,8 +5,10 @@ import com.bloxblueprint.bloxblueprint.entities.User;
 import com.bloxblueprint.bloxblueprint.mappers.UserMapper;
 import com.bloxblueprint.bloxblueprint.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -15,7 +17,6 @@ import java.util.Optional;
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final JwtService jwtService;
     private final UserMapper userMapper;
 
     public RegisterUserResponseDto registerUser(RegisterUserRequestDto registerUserRequestDto) {
@@ -44,7 +45,7 @@ public class AuthService {
     }
 
     public LoginUserResponseDto login(LoginUserRequestDto loginRequestDto) {
-        Optional<User> optionalUser = userRepository.findByUsername(loginRequestDto.getUsername());
+        Optional<User> optionalUser = findUser(loginRequestDto);
 
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
@@ -61,5 +62,21 @@ public class AuthService {
                 .success(false)
                 .message("Invalid username or password")
                 .build();
+    }
+
+    public UserDto getCurrentUser(String username) {
+        User user = userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        return userMapper.toUserDto(user);
+    }
+
+    private Optional<User> findUser(LoginUserRequestDto loginRequestDto) {
+        String identifier = loginRequestDto.getIdentifier();
+        if (identifier == null || identifier.isBlank())
+            return Optional.empty();
+
+        return userRepository.findByUsernameOrEmailOrPhoneNumber(identifier, identifier, identifier);
     }
 }
