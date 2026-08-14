@@ -1,37 +1,3 @@
-:root {
-    font-family: Inter, system-ui, sans-serif;
-    color: #0f172a;
-    background: #ffffff;
-
-    --navy: #020f2f;
-    --navy-light: #062054;
-    --blue: #1677ff;
-    --blue-hover: #0866e8;
-    --muted: #64748b;
-    --border: #dbe5f1;
-}
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    margin: 0;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-button, a {
-    font: inherit;
-}
-
 .navbar {
   min-height: 76px;
   padding: 0 24px;
@@ -140,7 +106,6 @@ button, a {
     background:
         linear-gradient(rgb(16 90 190 / 16%) 1px, transparent 1px),
         linear-gradient(90deg, rgb(16 90 190 / 16%) 1px, transparent 1px),
-        radial-gradient(circle at 30% 30%, #082d6b, transparent 28%),
         var(--navy);
     background-size: 32px 32px, 32px 32px, auto auto;
     background-position: 0 0, 0 0,  center, center;
