@@ -37,7 +37,7 @@ public class AuthCookieService {
                 .secure(secureCookie)
                 .sameSite("Lax")
                 .path("/")
-                .maxAge(Duration.ofMillis(jwtExpiration))
+                .maxAge(Duration.ZERO)
                 .build();
     }
 
