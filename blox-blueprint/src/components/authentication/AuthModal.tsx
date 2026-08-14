@@ -49,15 +49,15 @@ function AuthModal() {
         </button>
 
         <div className="auth-form-panel">
-          <div className="brand">
+          <div className="auth-brand">
             <img
               src="../src/assets/blox-blueprint-logo.png"
               alt=""
-              className="brand-logo"
+              className="auth-brand-logo"
             />
 
             <span>
-              Blox<span className="brand-accent">Blueprint</span>
+              Blox<span className="auth-brand-accent">Blueprint</span>
             </span>
           </div>
 

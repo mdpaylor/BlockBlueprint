@@ -25,13 +25,12 @@ export type RegisterUserResponseDto = {
 };
 
 export type LoginUserRequestDto = {
-  username: string;
+  identifier: string;
   password: string;
 };
 
 export type LoginUserResponseDto = {
   success: boolean;
   message: string;
-  token?: string;
   user?: UserDto;
 };

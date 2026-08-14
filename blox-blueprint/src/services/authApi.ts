@@ -2,12 +2,11 @@ import type
 { 
     LoginUserRequestDto,
     RegisterUserRequestDto,
-} from "../types/authTypes.ts";
+} from "../types/authTypes";
+import { apiFetch } from "./apiClient";
 
-const API_BASE_URL = "http://localhost:8080";
-
-export async function registerUser(data: RegisterUserRequestDto): Promise<Response> {
-    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+export function registerUser(data: RegisterUserRequestDto): Promise<Response> {
+    const response = apiFetch(`/auth/register`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -18,13 +17,33 @@ export async function registerUser(data: RegisterUserRequestDto): Promise<Respon
     return response;
 }
 
-export async function loginUser(data: LoginUserRequestDto): Promise<Response> {
-    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+export function loginUser(data: LoginUserRequestDto): Promise<Response> {
+    const response = apiFetch(`/auth/login`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     });
+    return response;
+}
+
+export function logoutUser(): Promise<Response> {
+    const response = apiFetch(`/auth/logout`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    return response;
+}
+
+export function getCurrentUser(): Promise<Response> {
+    const response = apiFetch("/auth/me", {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
     return response;
 }
