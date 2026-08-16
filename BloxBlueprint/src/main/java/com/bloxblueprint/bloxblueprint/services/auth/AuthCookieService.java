@@ -1,4 +1,4 @@
-package com.bloxblueprint.bloxblueprint.services;
+package com.bloxblueprint.bloxblueprint.services.auth;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;

@@ -16,11 +16,11 @@ public class ComponentLink {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "from_component_id")
+    @JoinColumn(name = "from_component_id", nullable = false)
     private Component fromComponent;
 
     @ManyToOne
-    @JoinColumn(name = "to_component_id")
+    @JoinColumn(name = "to_component_id", nullable = false)
     private Component toComponent;
 
     @Enumerated(EnumType.STRING)

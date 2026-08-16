@@ -6,7 +6,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,8 +22,8 @@ public class Experience {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "description")
     private String description;
@@ -55,4 +54,7 @@ public class Experience {
 
     @OneToMany(mappedBy = "experience")
     private Set<Monetization> monetizations = new HashSet<>();
+
+    @OneToMany(mappedBy = "experience")
+    private Set<Tag> tags = new HashSet<>();
 }

@@ -51,6 +51,9 @@ public class Update {
     @JoinColumn(name = "experience_id", nullable = false)
     private Experience experience;
 
+    @OneToMany(mappedBy = "update")
+    private Set<Task> tasks;
+
     public enum UpdateStatus {
         PLANNING, IN_PROGRESS, RELEASED
     }
