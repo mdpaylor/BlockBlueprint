@@ -50,7 +50,7 @@ public class ExperienceService {
     private int getTasksInProgressCount(Experience experience) {
         return experience
                 .getTasks().stream()
-                .filter(task -> task.getStatus() != Task.TaskStatus.IN_PROGRESS)
+                .filter(task -> task.getStatus() != Task.TaskStatus.COMPLETED)
                 .toList()
                 .size();
     }
@@ -122,7 +122,7 @@ public class ExperienceService {
     private List<ExperienceDataDto.NoteBrief> getRecentNoteBriefs(Experience experience) {
         return experience
                 .getNotes().stream()
-                .sorted(Comparator.comparing(Note::getUpdatedAt))
+                .sorted(Comparator.comparing(Note::getUpdatedAt).reversed())
                 .limit(4)
                 .map(n -> ExperienceDataDto.NoteBrief.builder()
                         .id(n.getId())
@@ -135,7 +135,9 @@ public class ExperienceService {
     private List<ExperienceDataDto.TagBrief> getTopTagBriefs(Experience experience) {
         return experience
                 .getTags().stream()
-                .sorted(Comparator.comparingInt(this::getTagUseCount).reversed())
+                .sorted(Comparator.comparingInt(this::getTagUseCount)
+                        .reversed()
+                        .thenComparing(Tag::getTitle))
                 .map(tag -> ExperienceDataDto.TagBrief.builder()
                         .id(tag.getId())
                         .title(tag.getTitle())

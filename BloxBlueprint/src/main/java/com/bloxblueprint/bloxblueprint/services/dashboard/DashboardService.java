@@ -39,7 +39,7 @@ public class DashboardService {
                                         .build())
                                 .toList()
                 )
-                .experienceDataDto(experienceDataDto)
+                .experienceData(experienceDataDto)
                 .build();
     }
 }

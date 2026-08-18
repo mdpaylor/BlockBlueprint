@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 public class ResponseAllDashboardMainDto {
     private List<ExperienceStructure> experiences;
-    private ExperienceDataDto experienceDataDto;
+    private ExperienceDataDto experienceData;
 
     @Getter
     @Setter
