@@ -2,7 +2,7 @@ package com.bloxblueprint.bloxblueprint.security;
 
 import com.bloxblueprint.bloxblueprint.entities.User;
 import com.bloxblueprint.bloxblueprint.repositories.UserRepository;
-import com.bloxblueprint.bloxblueprint.services.JwtService;
+import com.bloxblueprint.bloxblueprint.services.auth.JwtService;
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

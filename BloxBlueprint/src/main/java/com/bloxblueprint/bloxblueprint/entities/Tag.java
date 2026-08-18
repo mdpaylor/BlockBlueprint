@@ -19,8 +19,8 @@ public class Tag {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "description")
     private String description;
@@ -29,8 +29,8 @@ public class Tag {
     private String color;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "experience_id", nullable = false)
+    private Experience experience;
 
     @ManyToMany(mappedBy = "tags")
     private Set<Task> tasks = new HashSet<>();

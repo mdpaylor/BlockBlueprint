@@ -1,4 +1,4 @@
-package com.bloxblueprint.bloxblueprint.services;
+package com.bloxblueprint.bloxblueprint.services.auth;
 
 import com.bloxblueprint.bloxblueprint.entities.User;
 import io.jsonwebtoken.Claims;

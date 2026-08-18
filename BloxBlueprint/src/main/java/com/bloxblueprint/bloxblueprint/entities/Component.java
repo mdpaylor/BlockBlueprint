@@ -23,8 +23,8 @@ public class Component {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "description")
     private String description;
@@ -45,7 +45,7 @@ public class Component {
     private Experience experience;
 
     @ManyToOne
-    @JoinColumn(name = "parent_component_id", nullable = false)
+    @JoinColumn(name = "parent_component_id")
     private Component parent;
 
     @ManyToMany

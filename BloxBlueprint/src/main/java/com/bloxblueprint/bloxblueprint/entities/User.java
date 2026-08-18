@@ -46,7 +46,4 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Experience> experiences = new HashSet<>();
-
-    @OneToMany(mappedBy = "user")
-    private Set<Tag> tags = new HashSet<>();
 }

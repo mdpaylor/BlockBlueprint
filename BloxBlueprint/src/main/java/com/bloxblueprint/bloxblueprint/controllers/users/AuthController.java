@@ -1,9 +1,9 @@
 package com.bloxblueprint.bloxblueprint.controllers.users;
 
 import com.bloxblueprint.bloxblueprint.dtos.user.*;
-import com.bloxblueprint.bloxblueprint.services.AuthCookieService;
-import com.bloxblueprint.bloxblueprint.services.AuthService;
-import com.bloxblueprint.bloxblueprint.services.JwtService;
+import com.bloxblueprint.bloxblueprint.services.auth.AuthCookieService;
+import com.bloxblueprint.bloxblueprint.services.auth.AuthService;
+import com.bloxblueprint.bloxblueprint.services.auth.JwtService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
