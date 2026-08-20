@@ -1,6 +1,6 @@
 package com.bloxblueprint.bloxblueprint.controllers.dashboard;
 
-import com.bloxblueprint.bloxblueprint.dtos.dashboard.ResponseAllDashboardMainDto;
+import com.bloxblueprint.bloxblueprint.dtos.dashboard.ResponseDashboardMainDto;
 import com.bloxblueprint.bloxblueprint.services.dashboard.DashboardService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +16,8 @@ public class DashboardController {
     private DashboardService dashboardService;
 
     @GetMapping
-    public ResponseEntity<ResponseAllDashboardMainDto> getAllDashboardInfo(Authentication authentication) {
-        ResponseAllDashboardMainDto responseAllDashboardMainDto =
+    public ResponseEntity<ResponseDashboardMainDto> getAllDashboardInfo(Authentication authentication) {
+        ResponseDashboardMainDto responseAllDashboardMainDto =
                 dashboardService.getInitialDashboardData(authentication.getName());
 
         if (responseAllDashboardMainDto == null)
