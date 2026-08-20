@@ -1,16 +1,10 @@
-export type Experience = {
+export type ExperienceBrief = {
     id: number;
     title: string;
 }
 
 export type InitialDashboardDto = {
-    experiences: ExperienceStructure[];
-    experienceData: ExperienceDataDto
-}
-
-export type ExperienceStructure = {
-    id: number;
-    title: string;
+    experiences: ExperienceBrief[];
 }
 
 export type ExperienceDataDto = {

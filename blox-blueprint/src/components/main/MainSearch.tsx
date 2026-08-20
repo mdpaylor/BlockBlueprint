@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-function DashboardSearch() {
+function MainSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -27,7 +27,7 @@ function DashboardSearch() {
   }, []);
 
   return (
-    <div className="dashboard-search" onClick={() => inputRef.current?.focus()}>
+    <div className="main-search" onClick={() => inputRef.current?.focus()}>
       <Search size={18} />
 
       <input
@@ -44,4 +44,4 @@ function DashboardSearch() {
   );
 }
 
-export default DashboardSearch;
+export default MainSearch;

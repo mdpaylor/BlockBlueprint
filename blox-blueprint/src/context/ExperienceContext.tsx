@@ -6,13 +6,13 @@ import {
   type ReactNode,
   type SetStateAction,
 } from "react";
-import type { Experience } from "../types/experienceTypes";
+import type { ExperienceBrief } from "../types/experienceTypes";
 
 type ExperienceContextValue = {
-  activeExperience: Experience | null;
-  experiences: Experience[] | null;
-  setActiveExperience: Dispatch<SetStateAction<Experience | null>>;
-  setExperiences: Dispatch<SetStateAction<Experience[] | null>>;
+  activeExperience: ExperienceBrief | null;
+  experiences: ExperienceBrief[] | null;
+  setActiveExperience: Dispatch<SetStateAction<ExperienceBrief | null>>;
+  setExperiences: Dispatch<SetStateAction<ExperienceBrief[] | null>>;
 };
 
 const ExperienceContext = createContext<ExperienceContextValue | undefined>(
@@ -24,10 +24,10 @@ type ExperienceProviderProps = {
 };
 
 export function ExperienceProvider({ children }: ExperienceProviderProps) {
-  const [activeExperience, setActiveExperience] = useState<Experience | null>(
+  const [activeExperience, setActiveExperience] = useState<ExperienceBrief | null>(
     null,
   );
-  const [experiences, setExperiences] = useState<Experience[] | null>(null);
+  const [experiences, setExperiences] = useState<ExperienceBrief[] | null>(null);
 
   return (
     <ExperienceContext.Provider

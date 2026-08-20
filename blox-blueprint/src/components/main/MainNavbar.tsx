@@ -1,21 +1,21 @@
 import { Bell, Settings } from "lucide-react";
-import DashboardBrand from "./DashboardBrand";
-import DashboardProjectDropdown from "./DashboardProjectDropdown";
-import DashboardSearch from "./DashboardSearch";
+import MainBrand from "./MainBrand";
+import MainProjectDropdown from "./MainProjectDropdown";
+import MainSearch from "./MainSearch";
 import { NavLink } from "react-router";
 
-function DashboardNavbar() {
+function MainNavbar() {
   let profileImage = ""; // #TODO: Replace with the actual path to the profile image
 
   return (
-    <header className="dashboard-navbar">
-      <DashboardBrand />
-      <DashboardProjectDropdown />
-      <DashboardSearch />
+    <header className="main-navbar">
+      <MainBrand />
+      <MainProjectDropdown />
+      <MainSearch />
 
-      <div className="dashboard-right-icons">
+      <div className="main-right-icons">
         <button
-          className="dashboard-icon-button"
+          className="main-icon-button"
           type="button"
           aria-label="Notifications"
         >
@@ -23,7 +23,7 @@ function DashboardNavbar() {
         </button>
 
         <NavLink
-          className="dashboard-icon-button"
+          className="main-icon-button"
           to="/dashboard/settings"
           aria-label="Settings"
         >
@@ -31,7 +31,7 @@ function DashboardNavbar() {
         </NavLink>
 
         <NavLink
-          className="dashboard-profile-button"
+          className="main-profile-button"
           to="/user/profile"
           aria-label="Profile"
         >
@@ -43,4 +43,4 @@ function DashboardNavbar() {
   );
 }
 
-export default DashboardNavbar;
+export default MainNavbar;
