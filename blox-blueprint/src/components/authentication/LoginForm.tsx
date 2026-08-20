@@ -79,7 +79,9 @@ function LoginForm() {
         <div
           className={`login-input-field ${loginError ? "login-input-field-error" : ""}`}
         >
-          <label htmlFor="login-username">Username, Email, or Phone Number</label>
+          <label htmlFor="login-username">
+            Username, Email, or Phone Number
+          </label>
           <input
             id="login-username"
             name="username"

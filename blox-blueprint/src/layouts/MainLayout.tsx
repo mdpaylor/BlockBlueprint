@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
-import "../css/Dashboard.css";
+import "../css/dashboard/MainLayout.css";
 import DashboardSidebar from "../components/dashboard/DashboardSidebar";
 import DashboardNavbar from "../components/dashboard/DashboardNavbar";
 
-function DashboardLayout() {
+function MainLayout() {
   return (
     <div className="dashboard-layout">
       <DashboardNavbar />
@@ -19,4 +19,4 @@ function DashboardLayout() {
   );
 }
 
-export default DashboardLayout;
+export default MainLayout;

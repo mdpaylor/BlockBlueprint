@@ -2,7 +2,9 @@ import HomePage from "./pages/HomePage";
 import { Routes, Route } from "react-router-dom";
 import "./css/App.css";
 import AuthModal from "./components/authentication/AuthModal";
-import DashboardLayout from "./layouts/DashboardLayout";
+import MainLayout from "./layouts/MainLayout";
+import ExperienceLayout from "./layouts/ExperienceLayout";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -13,7 +15,13 @@ function App() {
           <Route path="register" element={<AuthModal />} />
         </Route>
 
-        <Route path="/dashboard" element={<DashboardLayout />} />
+        <Route element={<MainLayout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          <Route path="/experiences/:experienceId" element={<ExperienceLayout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+          </Route>
+        </Route>
       </Routes>
     </main>
   );
