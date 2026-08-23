@@ -3,7 +3,9 @@ import { Box, ClipboardCheck, Rocket, Tag } from "lucide-react";
 import { useExperience } from "../context/ExperienceContext";
 import type { ExperienceDataDto } from "../types/experienceTypes";
 import { getSingleExperienceDashboard } from "../services/experienceApi";
-import DashboardPanelCount from "../components/dashboard/DashboardPanelCount";
+import DashboardWidgetCount from "../components/dashboard/DashboardWidgetCount";
+import "../css/main/Dashboard.css";
+import DashboardProjectStructure from "../components/dashboard/DashboardProjectStructure";
 
 function Dashboard() {
   const { activeExperience } = useExperience();
@@ -54,33 +56,38 @@ function Dashboard() {
   }, [activeExperience]);
 
   return (
-    <div>
-        <div className="dashboard-top-panels">
-            <DashboardPanelCount
+    <div className="dash">
+        <div className="dash-top-widgets">
+            <DashboardWidgetCount
                 icon={Box}
                 color="#2563eb"
                 title="Total Components"
                 count={experienceInfo?.componentCount ?? 0}
             />
-            <DashboardPanelCount
+            <DashboardWidgetCount
                 icon={ClipboardCheck}
                 color="#8b5cf6"
                 title="Tasks In Progress"
                 count={experienceInfo?.tasksInProgressCount ?? 0}
             />
-            <DashboardPanelCount
+            <DashboardWidgetCount
                 icon={Rocket}
                 color="#22d3ee"
                 title="Planned Updates"
                 count={experienceInfo?.plannedUpdatesCount ?? 0}
             />
-            <DashboardPanelCount
+            <DashboardWidgetCount
                 icon={Tag}
                 color="#2563eb"
                 title="Active Tags"
                 count={experienceInfo?.usedTagCount ?? 0}
             />
         </div>
+
+        <div className="dash-center-widgets">
+            <DashboardProjectStructure />
+        </div>
+        
     </div>
   );
 }

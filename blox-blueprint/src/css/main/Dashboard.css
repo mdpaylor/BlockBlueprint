@@ -1,0 +1,48 @@
+.dash {
+    min-height: calc(100vh - 66px); /* TODO: Check to see if this is valid */
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.dash-widget {
+    background: #10293E;
+    border-radius: 12px;
+    border: 1px solid #ffffff20;
+}
+
+.dash-top-widgets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    justify-content: center;
+    min-height: 73px;
+}
+
+.dash-top-count-widget {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+}
+
+.dash-top-count-widget-icon {
+    border-radius: 10px;
+    padding: 3px;
+    justify-content: center;
+    align-content: center;
+}
+
+.dash-top-count-widget-icon svg {
+    transform: translateY(1px);
+}
+
+.dash-top-count-widget-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-top-count-widget-text span {
+    font-size: 1.4em;
+}

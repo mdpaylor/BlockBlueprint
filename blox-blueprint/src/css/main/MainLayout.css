@@ -22,7 +22,7 @@
   align-items: center;
   gap: 20px;
   color: #ffffff;
-  border-bottom: 1px solid #7e7e7e;
+  border-bottom: 1px solid #FFFFFF40;
 }
 
 .main-brand {
@@ -211,7 +211,7 @@
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #7e7e7e;
+  border-right: 1px solid #FFFFFF40;
 }
 
 .main-sidebar-links {
