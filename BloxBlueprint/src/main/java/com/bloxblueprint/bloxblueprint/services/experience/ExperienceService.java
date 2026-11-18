@@ -4,13 +4,16 @@ import com.bloxblueprint.bloxblueprint.dtos.dashboard.ExperienceBriefDto;
 import com.bloxblueprint.bloxblueprint.dtos.dashboard.ExperienceDataDto;
 import com.bloxblueprint.bloxblueprint.entities.*;
 import com.bloxblueprint.bloxblueprint.repositories.ExperienceRepository;
+import com.bloxblueprint.bloxblueprint.repositories.UpdateRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,6 +21,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ExperienceService {
     private ExperienceRepository experienceRepository;
+    private UpdateRepository updateRepository;
 
     public ExperienceDataDto getExperienceDashboardDataById(long experienceId) {
         Optional<Experience> experienceOptional  = experienceRepository.findById(experienceId);
@@ -44,7 +48,31 @@ public class ExperienceService {
     }
 
     public List<ExperienceBriefDto> getExperienceBriefsByUserId(long userId) {
-        return experienceRepository.findExperienceBriefsByUserId(userId);
+        List<ExperienceBriefDto> briefs = experienceRepository.findExperienceBriefsByUserId(userId);
+
+        if (briefs.isEmpty())
+            return briefs;
+
+        List<Long> experienceIds = briefs.stream().map(ExperienceBriefDto::id).toList();
+
+        Map<Long, String> latestVersionByExperienceId = updateRepository
+                .findReleasedUpdateInfoByExperienceIds(experienceIds)
+                .stream()
+                .collect(Collectors.groupingBy(
+                        row -> (Long) row[0],
+                        Collectors.collectingAndThen(
+                                Collectors.maxBy(Comparator.comparing(row -> (LocalDateTime) row[2])),
+                                maxRow -> maxRow.map(row -> (String) row[1]).orElse(null)
+                        )
+                ));
+
+        return briefs.stream()
+                .map(brief -> new ExperienceBriefDto(
+                        brief.id(),
+                        brief.title(),
+                        latestVersionByExperienceId.get(brief.id())
+                ))
+                .toList();
     }
 
     private int getTasksInProgressCount(Experience experience) {

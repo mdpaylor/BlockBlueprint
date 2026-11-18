@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import dashboardSidebar from "../../assets/blox_dashboard_sidebar.png";
-import { useExperience } from "../../context/ExperienceContext";
+import useGetActiveExperience from "../../hooks/useGetActiveExperience";
 
 type SidebarOption = {
   title: string;
@@ -22,55 +22,54 @@ type SidebarOption = {
 };
 
 function MainSidebar() {
-  const { activeExperience } = useExperience();
+  const activeExperience = useGetActiveExperience();
   const dashboardPath = activeExperience
     ? `/experiences/${activeExperience.id}/dashboard`
     : "/dashboard";
 
-    let experiencePath = "/0";
-    if (activeExperience)
-      experiencePath = `/${activeExperience.id}`;
+  let experiencePath = "/0";
+  if (activeExperience) experiencePath = `/${activeExperience.id}`;
 
   const sidebarOptions: SidebarOption[] = [
     {
       title: "Dashboard",
       path: dashboardPath,
-      icon: Grid2x2
+      icon: Grid2x2,
     },
     {
       title: "Experiences",
       path: `/experiences${experiencePath}/experiences`,
-      icon: Gamepad2
+      icon: Gamepad2,
     },
     {
       title: "Components",
       path: `/experiences${experiencePath}/components`,
-      icon: Box
+      icon: Box,
     },
     {
       title: "Tasks",
       path: `/experiences${experiencePath}/tasks`,
-      icon: ClipboardCheck
+      icon: ClipboardCheck,
     },
     {
       title: "Updates",
       path: `/experiences${experiencePath}/updates`,
-      icon: Rocket
+      icon: Rocket,
     },
     {
       title: "Monetization",
       path: `/experiences${experiencePath}/monetization`,
-      icon: CircleDollarSign
+      icon: CircleDollarSign,
     },
     {
       title: "Notes",
       path: `/experiences${experiencePath}/notes`,
-      icon: NotebookText
+      icon: NotebookText,
     },
     {
       title: "Tags",
       path: `/experiences${experiencePath}/tags`,
-      icon: Tag
+      icon: Tag,
     },
   ];
 
@@ -93,24 +92,15 @@ function MainSidebar() {
       </nav>
 
       <div className="lower-content">
-        <div className="main-experience-info">
-          <Rocket />
-          <div className="main-experience-info-text">
-            <span className="main-experience-info-title">
-              My Experience
-            </span>
-            <span className="main-experience-update-version">
-              Update v1.0.0
-            </span>
-          </div>
-        </div>
+        <SidebarUpdateSection
+          title={activeExperience?.title ?? "No Project Selected"}
+          updateVersion={activeExperience?.updateVersion ?? ""}
+        />
 
         <NavLink
           to="/dashboard/settings"
           className={({ isActive }) =>
-            isActive
-              ? "main-project-settings active"
-              : "main-project-settings"
+            isActive ? "main-project-settings active" : "main-project-settings"
           }
         >
           <Settings />
@@ -123,6 +113,28 @@ function MainSidebar() {
         </div>
       </div>
     </aside>
+  );
+}
+
+type SidebarUpdateSectionProps = {
+  title: string;
+  updateVersion: string;
+};
+
+function SidebarUpdateSection({
+  title,
+  updateVersion,
+}: SidebarUpdateSectionProps) {
+  return (
+    <div className="main-experience-info">
+      <Rocket />
+      <div className="main-experience-info-text">
+        <span className="main-experience-info-title">{title}</span>
+        <span className="main-experience-update-version">
+          {updateVersion !== "" ? `Update ${updateVersion}` : "No updates yet"}
+        </span>
+      </div>
+    </div>
   );
 }
 

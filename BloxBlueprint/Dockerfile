@@ -10,7 +10,7 @@ run ./mvnw dependency:go-offline
 COPY src/ src/
 RUN ./mvnw clean package -DskipTests
 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 

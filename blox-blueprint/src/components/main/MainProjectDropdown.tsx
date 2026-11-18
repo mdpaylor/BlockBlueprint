@@ -2,10 +2,11 @@ import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useExperience } from "../../context/ExperienceContext";
 import type { ExperienceBrief } from "../../types/experienceTypes";
-
+import useGetActiveExperience from "../../hooks/useGetActiveExperience";
 
 function MainProjectDropdown() {
-  const { activeExperience, experiences, setActiveExperience } = useExperience();
+  const activeExperience = useGetActiveExperience();
+  const { experiences, setActiveExperience } = useExperience();
   const [isOpen, setIsOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);

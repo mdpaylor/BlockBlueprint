@@ -22,7 +22,7 @@
   align-items: center;
   gap: 20px;
   color: #ffffff;
-  border-bottom: 1px solid #FFFFFF40;
+  border-bottom: 1px solid var(--dashboard-border);
 }
 
 .main-brand {
@@ -211,7 +211,7 @@
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #FFFFFF40;
+  border-right: 1px solid var(--dashboard-border);
 }
 
 .main-sidebar-links {

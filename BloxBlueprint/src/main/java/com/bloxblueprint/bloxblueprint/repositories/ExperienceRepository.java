@@ -13,7 +13,8 @@ public interface ExperienceRepository extends JpaRepository<Experience, Long>
     @Query("""
         SELECT new com.bloxblueprint.bloxblueprint.dtos.dashboard.ExperienceBriefDto(
             e.id,
-            e.title
+            e.title,
+            NULL
         )
         FROM Experience e
         WHERE e.user.id = :userId

@@ -1,6 +1,7 @@
 export type ExperienceBrief = {
     id: number;
     title: string;
+    updateVersion: string | null;
 }
 
 export type InitialDashboardDto = {
@@ -17,7 +18,7 @@ export type ExperienceDataDto = {
     usedTagCount: number;
     componentTypeCounts: ComponentType[];
     tasks: TaskBrief[];
-    nextUpdate: NextUpdate;
+    nextUpdate: NextUpdate | null;
     recentNotes: NoteBrief[];
     topTags: TagBrief[];
 }
